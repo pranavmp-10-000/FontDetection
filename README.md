@@ -11,3 +11,5 @@ Place the file in Models folder.
 - ``` git clone https://github.com/pranavmp-10-000/FontDetection/ ```
 - ``` cd FontDetection ```
 - ``` streamlit run App/app.py ```
+## Sample Prediction
+![Image](https://github.com/pranavmp-10-000/FontDetection/blob/master/samplePrediction.png)
