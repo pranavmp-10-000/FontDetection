@@ -61,7 +61,7 @@ def predict(model,image):
         logits = tf.nn.softmax(prediction)
         max_index = np.argmax(logits)
         output['detectedFonts'].append({'boundingBox':text_boxes_xy[i],"font":class_names[max_index],"confidence":np.max(logits)})
-    return output
+    return im2,output
 
 
 def load_image(file):
@@ -75,8 +75,14 @@ def button_click(image):
     wd = os.getcwd()
     model = tf.keras.models.load_model(wd+'/Models/FinalModel.h5')
 
-    prediction = predict(model,image)
-    st.write(prediction)
+    im,prediction = predict(model,image)
+    col1, col2 = st.columns(2)
+    with col1:
+        st.header('Detection in Image')
+        st.image(im)
+    with col2:
+        st.header('Predictions')
+        st.write(prediction)
 
 if predictB==False:
     uploaded_file = st.file_uploader("Choose a file",type=["png","jpg","jpeg"])
@@ -91,7 +97,8 @@ if predictB==False:
         # To View Uploaded Image
         image = load_image(uploaded_file)
         st.image(image)
-        st.button("Predict Font",on_click=button_click(np.array(image)))
+        if st.button("Predict Font"):
+            button_click(np.array(image))
 
 
     
